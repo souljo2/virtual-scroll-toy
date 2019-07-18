@@ -1,2 +1,2 @@
-export { default as App } from './AppContainer'
-export * from './AppContainer'
+export * from './App';
+export * from './VTable';
