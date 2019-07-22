@@ -1,57 +1,57 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
+import React, { Component } from 'react'
+import _ from 'lodash'
 import {
     Column,
     Table,
     AutoSizer,
     SortDirection,
-    SortDirectionType
-} from 'react-virtualized';
-import 'react-virtualized/styles.css';
+    SortDirectionType,
+} from 'react-virtualized'
+import 'react-virtualized/styles.css'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-import VTable from './VTable';
+import VTable from './VTable'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 interface VTableCProps {}
 
 interface VTableStateProps extends SortParamProps {
-    sortedList: Array<ItemProps>;
-    pageIndex: number;
+    sortedList: Array<ItemProps>
+    pageIndex: number
 }
 
 interface SortParamProps {
-    sortBy: string;
-    sortDirection: SortDirectionType;
+    sortBy: string
+    sortDirection: SortDirectionType
 }
 
 interface ItemProps {
-    index: number;
-    name: string;
-    description: string;
+    index: number
+    name: string
+    description: string
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class VTableContainer extends Component<VTableCProps, VTableStateProps> {
-    list: Array<ItemProps> = [];
-    rowHeight = 30;
-    pageCountPerRequest = 50;
+    list: Array<ItemProps> = []
+    rowHeight = 30
+    pageCountPerRequest = 50
 
     constructor(props: VTableCProps) {
-        super(props);
+        super(props)
 
-        this.getListItem();
+        this.getListItem()
 
-        const sortBy = 'index';
-        const sortDirection = SortDirection.ASC;
-        const sortedList = this._sortList({ sortBy, sortDirection });
+        const sortBy = 'index'
+        const sortDirection = SortDirection.ASC
+        const sortedList = this._sortList({ sortBy, sortDirection })
 
         this.state = {
             sortBy,
             sortDirection,
             sortedList,
-            pageIndex: 1
-        } as VTableStateProps;
+            pageIndex: 1,
+        } as VTableStateProps
     }
 
     render() {
@@ -84,62 +84,62 @@ class VTableContainer extends Component<VTableCProps, VTableStateProps> {
                     )}
                 </AutoSizer>
             </VTable>
-        );
+        )
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     _sortList = ({ sortBy, sortDirection }: SortParamProps) => {
-        let newList = _.sortBy(this.list, [sortBy]);
+        let newList = _.sortBy(this.list, [sortBy])
         if (sortDirection === SortDirection.DESC) {
-            newList.reverse();
+            newList.reverse()
         }
-        return newList;
-    };
+        return newList
+    }
 
     _sort = ({ sortBy, sortDirection }: SortParamProps) => {
-        const sortedList = this._sortList({ sortBy, sortDirection });
-        this.setState({ sortBy, sortDirection, sortedList });
-    };
+        const sortedList = this._sortList({ sortBy, sortDirection })
+        this.setState({ sortBy, sortDirection, sortedList })
+    }
 
     _handleScroll = ({
         clientHeight,
-        scrollTop
+        scrollTop,
     }: {
-        clientHeight: number;
-        scrollHeight: number;
-        scrollTop: number;
+        clientHeight: number
+        scrollHeight: number
+        scrollTop: number
     }) => {
-        const { pageIndex, sortBy, sortDirection } = this.state;
+        const { pageIndex, sortBy, sortDirection } = this.state
         const curLimit =
             this.rowHeight * pageIndex * this.pageCountPerRequest -
-            clientHeight * 1.5;
+            clientHeight * 1.5
 
         if (curLimit <= scrollTop) {
             try {
                 this.getListItem(
-                    this.pageCountPerRequest * this.state.pageIndex + 1
-                );
+                    this.pageCountPerRequest * this.state.pageIndex + 1,
+                )
 
                 const sortedList = this._sortList({
                     sortBy,
-                    sortDirection
-                });
+                    sortDirection,
+                })
 
                 this.setState({
                     ...this.state,
                     pageIndex: pageIndex + 1,
-                    sortedList
-                });
+                    sortedList,
+                })
             } catch (err) {
-                console.log(pageIndex);
-                console.log('끄으으읏');
+                console.log(pageIndex)
+                console.log('끄으으읏')
             }
         }
-    };
+    }
 
     getListItem = (startIndex = 0) => {
-        const pageIndex = this.state ? this.state.pageIndex || 1 : 1;
-        if (pageIndex > 200) throw new Error('Over limit');
+        const pageIndex = this.state ? this.state.pageIndex || 1 : 1
+        if (pageIndex > 200) throw new Error('Over limit')
 
         for (
             let i = startIndex, max = startIndex + this.pageCountPerRequest;
@@ -149,10 +149,10 @@ class VTableContainer extends Component<VTableCProps, VTableStateProps> {
             this.list.push({
                 index: i,
                 name: `${Math.ceil(Math.random() * 10001)} - Brian Vaughn`,
-                description: `Developer ${Math.ceil(Math.random() * 10001)}`
-            });
+                description: `Developer ${Math.ceil(Math.random() * 10001)}`,
+            })
         }
-    };
+    }
 }
 
-export default VTableContainer;
+export default VTableContainer

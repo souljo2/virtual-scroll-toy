@@ -1,2 +1,2 @@
-export { default as VTable } from './VTableContainer';
-export * from './VTableContainer';
+export { default as VTable } from './VTableContainer'
+export * from './VTableContainer'

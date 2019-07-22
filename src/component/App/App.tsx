@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
 interface AppFCProps {}
 
@@ -9,8 +9,8 @@ const App: React.FC<AppFCProps> = ({ ...props }) => {
             <AppTitle>Virtual Scroll을 해봅시다.</AppTitle>
             <AppVTableWrapper>{props.children}</AppVTableWrapper>
         </AppWrapper>
-    );
-};
+    )
+}
 
 const AppWrapper = styled.section`
     && {
@@ -24,7 +24,7 @@ const AppWrapper = styled.section`
         align-items: center;
         flex-direction: column;
     }
-`;
+`
 
 const AppTitle = styled.div`
     && {
@@ -32,7 +32,7 @@ const AppTitle = styled.div`
         font-weight: bold;
         padding-bottom: 24px;
     }
-`;
+`
 
 const AppVTableWrapper = styled.div`
     && {
@@ -43,6 +43,6 @@ const AppVTableWrapper = styled.div`
         background: #fff;
         border-radius: 4px;
     }
-`;
+`
 
-export default App;
+export default App
